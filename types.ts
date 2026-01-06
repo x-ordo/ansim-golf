@@ -59,8 +59,16 @@ export interface TeeTime {
   // 골프몬 수준의 추가 메타데이터
   holes: 18 | 27 | 36;
   caddyType: 'CADDY' | 'NO_CADDY' | 'DRIVING_CADDY';
-  createdAt: string; // 등록 일시 (예: 01/06 22:25)
-  isEmergency?: boolean; // 긴급 매물 여부
+  createdAt: string; 
+  isEmergency?: boolean; 
+  
+  // 조인 및 투어 특화 필드
+  joinRequirements?: {
+    gender: 'MALE' | 'FEMALE' | 'ANY' | 'COUPLE';
+    count: number;
+  };
+  isTourPackage?: boolean;
+  lodgingInfo?: string; // 예: "델피노 리조트 1박"
 }
 
 export interface DateCount {
