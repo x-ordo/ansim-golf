@@ -25,23 +25,31 @@ const App: React.FC = () => {
   }, [selectedRegion, selectedDate, searchQuery]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f8fafc] pb-20 md:pb-0">
+    <div className="min-h-screen flex flex-col bg-[#f4f7fa] pb-24 md:pb-0 font-sans tracking-tight">
       <Header viewMode={viewMode} onViewModeChange={setViewMode} />
 
-      {/* Pull to Refresh Area (Simulated) */}
-      <div className="h-1 w-full bg-golfmon-gradient opacity-20"></div>
+      {/* Pull to Refresh Area (Visual Accent) */}
+      <div className="h-0.5 w-full bg-golfmon-gradient opacity-30"></div>
 
       <main className="flex-1 max-w-7xl mx-auto w-full">
         {/* Sticky Sub-Header for Dates */}
-        <div className="sticky top-14 z-30 bg-white/90 backdrop-blur-md px-4 py-3 border-b border-slate-100">
-          <div className="flex justify-between items-center mb-3">
+        <div className="sticky top-14 z-30 bg-white/95 backdrop-blur-md px-4 py-4 border-b border-slate-200/60 shadow-sm">
+          <div className="flex justify-between items-center mb-4">
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-slate-900">
-                {viewMode === 'BOARD' ? '실시간 리스트' : '안심 추천 매물'}
+              <h2 className="text-xs font-black text-slate-400 uppercase tracking-widest">
+                {viewMode === 'BOARD' ? '실시간 타임' : '안심 추천'}
               </h2>
-              <span className="animate-pulse bg-red-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">LIVE</span>
+              <div className="flex items-center gap-1.5 bg-red-50 px-2 py-0.5 rounded-full">
+                <span className="flex h-1.5 w-1.5 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-red-500"></span>
+                </span>
+                <span className="text-[9px] text-red-600 font-black">LIVE</span>
+              </div>
             </div>
-            <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">총 {filteredTeeTimes.length}개</span>
+            <span className="text-[10px] text-slate-400 font-bold bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
+              전체 <span className="text-emerald-600">{filteredTeeTimes.length}개</span>의 매칭
+            </span>
           </div>
           <DateSelector 
             dates={MOCK_DATE_COUNTS} 
@@ -50,10 +58,10 @@ const App: React.FC = () => {
           />
         </div>
 
-        <div className="px-0 md:px-4 py-0 md:py-6">
-          <div className="flex flex-col md:flex-row gap-8">
-            {/* Sidebar / Filters (Pro Mode Only or Hidden on Mobile) */}
-            <aside className="hidden md:block w-64 space-y-8 py-6">
+        <div className="px-0 md:px-6 py-0 md:py-8">
+          <div className="flex flex-col md:flex-row gap-10">
+            {/* Sidebar / Filters (Optimized Typography) */}
+            <aside className="hidden md:block w-72 space-y-10 py-2">
               {/* ... (Sidebar content remains same) */}
 
               <div>
