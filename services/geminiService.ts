@@ -5,6 +5,10 @@ import { ChatMessage } from "../types";
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 export const generateGolfAdvice = async (history: ChatMessage[]): Promise<string> => {
+  if (!process.env.API_KEY) {
+    return "API Key 설정을 해주세요. (Gemini API Key가 필요합니다)";
+  }
+
   const model = ai.models.generateContent({
     model: 'gemini-3-flash-preview',
     contents: history.map(msg => ({
