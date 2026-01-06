@@ -1,0 +1,7 @@
+{
+  "name": "안심골프 (Ansim Golf) - 차세대 부킹 플랫폼",
+  "description": "낙후된 골프 부킹 문화를 혁신하는 차세대 AI 기반 플랫폼. 안심 에스크로 결제와 스마트 매칭으로 투명하고 안전한 라운딩을 보장합니다.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
