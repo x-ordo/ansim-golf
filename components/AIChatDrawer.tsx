@@ -68,9 +68,21 @@ const AIChatDrawer: React.FC = () => {
         <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50">
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-emerald-600 text-white rounded-tr-none' : 'bg-white text-slate-800 shadow-sm border border-slate-100 rounded-tl-none'}`}>
-                {msg.text}
-              </div>
+                <div
+                  className={`max-w-[80%] p-3 rounded-2xl text-sm ${
+                    msg.role === 'user'
+                      ? 'bg-emerald-600 text-white rounded-tr-none'
+                      : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200 shadow-sm'
+                  }`}
+                >
+                  {msg.text}
+                  {msg.role === 'model' && (
+                    <div className="flex gap-2 mt-2 pt-2 border-t border-slate-200/50">
+                      <button className="text-[10px] text-slate-400 hover:text-emerald-600 transition-colors">👍 유용함</button>
+                      <button className="text-[10px] text-slate-400 hover:text-red-500 transition-colors">👎 부정확함</button>
+                    </div>
+                  )}
+                </div>
             </div>
           ))}
           {isLoading && (

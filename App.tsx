@@ -6,7 +6,10 @@ import DateSelector from './components/DateSelector';
 import MobileNav from './components/MobileNav';
 import { MOCK_TEE_TIMES, REGIONS, MOCK_DATE_COUNTS } from './constants';
 
+import BoardListItem from './components/BoardListItem';
+
 const App: React.FC = () => {
+  const [viewMode, setViewMode] = useState<'BOARD' | 'PRO'>('BOARD');
   const [selectedRegion, setSelectedRegion] = useState('ALL');
   const [selectedDate, setSelectedDate] = useState('2026-01-07');
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,21 +25,23 @@ const App: React.FC = () => {
   }, [selectedRegion, selectedDate, searchQuery]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f1f5f9] pb-20 md:pb-0">
-      <Header />
+    <div className="min-h-screen flex flex-col bg-[#f8fafc] pb-20 md:pb-0">
+      <Header viewMode={viewMode} onViewModeChange={setViewMode} />
 
       {/* Pull to Refresh Area (Simulated) */}
       <div className="h-1 w-full bg-golfmon-gradient opacity-20"></div>
 
       <main className="flex-1 max-w-7xl mx-auto w-full">
         {/* Sticky Sub-Header for Dates */}
-        <div className="sticky top-14 z-30 bg-white/80 backdrop-blur-md px-4 py-3 border-b border-slate-100">
+        <div className="sticky top-14 z-30 bg-white/90 backdrop-blur-md px-4 py-3 border-b border-slate-100">
           <div className="flex justify-between items-center mb-3">
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-bold text-slate-900">실시간 티타임</h2>
+              <h2 className="text-sm font-bold text-slate-900">
+                {viewMode === 'BOARD' ? '실시간 리스트' : '안심 추천 매물'}
+              </h2>
               <span className="animate-pulse bg-red-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">LIVE</span>
             </div>
-            <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">총 {filteredTeeTimes.length}개 검색</span>
+            <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">총 {filteredTeeTimes.length}개</span>
           </div>
           <DateSelector 
             dates={MOCK_DATE_COUNTS} 
@@ -45,43 +50,12 @@ const App: React.FC = () => {
           />
         </div>
 
-        <div className="px-4 py-6">
-          {/* Banner Section */}
-          <section className="relative rounded-2xl overflow-hidden mb-8 bg-slate-900 h-[200px] flex flex-col justify-center px-6 md:px-12">
-            <img 
-              src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?q=80&w=1600&auto=format&fit=crop" 
-              alt="Hero" 
-              className="absolute inset-0 w-full h-full object-cover opacity-40"
-            />
-            <div className="relative z-10 max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-emerald-600/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-4 border border-emerald-400/30">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                에스크로 안심 결제 정식 제휴
-              </div>
-              <h1 className="text-2xl md:text-4xl font-black text-white mb-2 leading-tight">
-                신뢰를 부킹하다<br />
-                <span className="text-emerald-500">안심골프</span> 에스크로
-              </h1>
-              <p className="text-slate-200 text-sm md:text-lg mb-4 opacity-90">
-                불법 크롤링 없는 정식 파트너십 재고. 먹튀 걱정 없는 선결제 시스템.
-              </p>
-              <div className="flex gap-3">
-                <button className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs md:text-sm font-bold py-2 px-6 rounded-full transition-all shadow-lg shadow-emerald-500/20">
-                  안심 티타임 찾기
-                </button>
-                <button className="bg-white/10 backdrop-blur hover:bg-white/20 text-white text-xs md:text-sm font-bold py-2 px-6 rounded-full border border-white/30 transition-all">
-                  파트너 SaaS
-                </button>
-              </div>
-            </div>
-          </section>
-
+        <div className="px-0 md:px-4 py-0 md:py-6">
           <div className="flex flex-col md:flex-row gap-8">
-            {/* Sidebar / Filters (Hidden on Mobile like an App) */}
-            <aside className="hidden md:block w-64 space-y-8">
+            {/* Sidebar / Filters (Pro Mode Only or Hidden on Mobile) */}
+            <aside className="hidden md:block w-64 space-y-8 py-6">
+              {/* ... (Sidebar content remains same) */}
+
               <div>
                 <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">지역 필터</h2>
                 <div className="flex flex-col gap-2">
@@ -147,39 +121,36 @@ const App: React.FC = () => {
 
             {/* Main Content Area */}
             <section className="flex-1">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div className="flex items-baseline gap-2">
-                  <h2 className="text-2xl font-bold text-slate-900">오늘의 추천 티타임</h2>
-                  <span className="text-sm font-medium text-slate-400">실시간 안심 매물 {filteredTeeTimes.length}개</span>
+              {viewMode === 'PRO' && (
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 px-4 md:px-0">
+                  <div className="flex items-baseline gap-2">
+                    <h2 className="text-2xl font-bold text-slate-900">오늘의 추천 티타임</h2>
+                  </div>
+                  <div className="relative w-full md:w-80">
+                    <input 
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="골프장 이름으로 검색"
+                      className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-11 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all shadow-sm"
+                    />
+                    <svg className="absolute left-4 top-3 w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
                 </div>
-                
-                <div className="relative w-full md:w-80">
-                  <input 
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="골프장 이름으로 검색"
-                    className="w-full bg-white border border-slate-200 rounded-xl px-4 py-2.5 pl-11 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all shadow-sm"
-                  />
-                  <svg className="absolute left-4 top-3 w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-              </div>
+              )}
 
               {filteredTeeTimes.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className={viewMode === 'BOARD' ? "flex flex-col bg-white md:rounded-2xl md:overflow-hidden md:border md:border-slate-100" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 md:px-0"}>
                   {filteredTeeTimes.map(tee => (
-                    <BookingCard key={tee.id} teeTime={tee} />
+                    viewMode === 'BOARD' 
+                      ? <BoardListItem key={tee.id} teeTime={tee} />
+                      : <BookingCard key={tee.id} teeTime={tee} />
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
-                  <div className="bg-slate-50 p-4 rounded-full mb-4">
-                    <svg className="w-12 h-12 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
+                <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200 mx-4 md:mx-0">
                   <h3 className="text-lg font-bold text-slate-900 mb-1">검색 결과가 없습니다</h3>
                   <p className="text-slate-500 text-sm">다른 지역이나 검색어로 다시 시도해 보세요.</p>
                 </div>
