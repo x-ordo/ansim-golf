@@ -24,27 +24,34 @@ const App: React.FC = () => {
 
       <main className="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
         {/* Banner Section */}
-        <section className="relative rounded-3xl overflow-hidden mb-12 bg-slate-900 h-[300px] flex flex-col justify-center px-8 md:px-16">
+        <section className="relative rounded-3xl overflow-hidden mb-12 bg-slate-900 h-[350px] flex flex-col justify-center px-8 md:px-16">
           <img 
-            src="https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?q=80&w=1600&auto=format&fit=crop" 
+            src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?q=80&w=1600&auto=format&fit=crop" 
             alt="Hero" 
-            className="absolute inset-0 w-full h-full object-cover opacity-50"
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
           />
           <div className="relative z-10 max-w-2xl">
+            <div className="inline-flex items-center gap-2 bg-emerald-600/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-4 border border-emerald-400/30">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              에스크로 안심 결제 정식 제휴
+            </div>
             <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
-              가장 투명하고 안전한<br />
-              <span className="text-emerald-400">안심골프</span> 부킹 서비스
+              신뢰를 부킹하다<br />
+              <span className="text-emerald-500">안심골프</span> 에스크로
             </h1>
             <p className="text-slate-200 text-lg mb-8 opacity-90">
-              더 이상 먹튀 걱정하지 마세요. 에스크로 결제로 보호받고,<br />
-              검증된 매니저의 황금 티타임만 모았습니다.
+              불법 크롤링 없는 정식 파트너십 재고. 먹튀 걱정 없는 선결제 시스템.<br />
+              공정위 표준약관을 준수하는 가장 투명한 골프 플랫폼입니다.
             </p>
             <div className="flex gap-4">
-              <button className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg shadow-emerald-500/20">
-                실시간 티타임 찾기
+              <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-full transition-all shadow-lg shadow-emerald-500/20">
+                안심 티타임 찾기
               </button>
               <button className="bg-white/10 backdrop-blur hover:bg-white/20 text-white font-bold py-3 px-8 rounded-full border border-white/30 transition-all">
-                신규 조인 등록
+                파트너 SaaS 도구 체험
               </button>
             </div>
           </div>
@@ -83,24 +90,33 @@ const App: React.FC = () => {
             </div>
 
             <div className="border-t border-slate-200 pt-8">
-              <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">안심 보증 시스템</h2>
+              <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">안심골프 보증 시스템</h2>
               <div className="flex flex-col gap-4">
                 <div className="flex items-start gap-3">
                   <div className="bg-emerald-50 p-2 rounded-lg">
-                    <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+                    <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.954 11.954 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">결제 대금 보호</h4>
-                    <p className="text-[10px] text-slate-500 leading-tight">라운딩 전까지 안전하게 보관됩니다.</p>
+                    <h4 className="text-xs font-bold text-slate-900">선결제 에스크로 보호</h4>
+                    <p className="text-[10px] text-slate-500 leading-tight">라운드 체크인 시까지 대금이 안전하게 보관됩니다.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="bg-blue-50 p-2 rounded-lg">
-                    <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  <div className="bg-slate-50 p-2 rounded-lg">
+                    <svg className="w-5 h-5 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-slate-900">노쇼 보상 제도</h4>
-                    <p className="text-[10px] text-slate-500 leading-tight">상대방 노쇼 시 위약금을 전액 보상합니다.</p>
+                    <h4 className="text-xs font-bold text-slate-900">빌링키 기반 노쇼 관리</h4>
+                    <p className="text-[10px] text-slate-500 leading-tight">약관 위반 노쇼 발생 시 자동 위약금이 청구됩니다.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="bg-emerald-50 p-2 rounded-lg">
+                    <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-slate-900">공정위 환불 규정 준수</h4>
+                    <p className="text-[10px] text-slate-500 leading-tight">4일 전 100% 자동 환불을 시스템으로 보장합니다.</p>
                   </div>
                 </div>
               </div>
