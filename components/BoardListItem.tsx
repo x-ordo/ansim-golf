@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { TeeTime } from '../types';
+import { TeeTime, BookingType } from '../types';
 
 interface BoardListItemProps {
   teeTime: TeeTime;
