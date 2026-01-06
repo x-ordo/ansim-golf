@@ -1,4 +1,3 @@
-
 import { BookingType, TeeTime } from './types';
 
 export const REGIONS = [
@@ -125,80 +124,4 @@ export const MOCK_DATE_COUNTS = [
   { date: '2026-01-10', count: 459 },
   { date: '2026-01-11', count: 288 },
   { date: '2026-01-12', count: 276 },
-];
-  {
-    id: '2',
-    course: {
-      id: 'c2',
-      name: '클럽72 (오션)',
-      location: '인천 중구',
-      region: 'SUDOKWON_SOUTH',
-      image: 'https://picsum.photos/seed/golf2/800/600',
-    },
-    date: '2024-12-25',
-    time: '12:45',
-    price: 210000,
-    originalPrice: 280000,
-    slotsTotal: 4,
-    slotsRemaining: 4,
-    type: BookingType.TRANSFER,
-    manager: {
-      id: 'm2',
-      name: '이지혜 매니저',
-      rating: 4.8,
-      reviewCount: 3400,
-      isVerified: true,
-    },
-    description: '긴급 양도! 바다 보이는 환상의 코스.',
-  },
-  {
-    id: '3',
-    course: {
-      id: 'c3',
-      name: '파주CC',
-      location: '경기 파주',
-      region: 'SUDOKWON_NORTH',
-      image: 'https://picsum.photos/seed/golf3/800/600',
-    },
-    date: '2024-12-26',
-    time: '08:12',
-    price: 155000,
-    originalPrice: 210000,
-    slotsTotal: 4,
-    slotsRemaining: 2,
-    type: BookingType.JOIN,
-    manager: {
-      id: 'm3',
-      name: '최부장',
-      rating: 4.7,
-      reviewCount: 890,
-      isVerified: false,
-    },
-    description: '2인 조인 가능합니다. 깔끔한 매너 플레이 원합니다.',
-  },
-  {
-    id: '4',
-    course: {
-      id: 'c4',
-      name: '라데나CC',
-      location: '강원 춘천',
-      region: 'GANGWON',
-      image: 'https://picsum.photos/seed/golf4/800/600',
-    },
-    date: '2024-12-27',
-    time: '06:54',
-    price: 120000,
-    originalPrice: 180000,
-    slotsTotal: 4,
-    slotsRemaining: 4,
-    type: BookingType.SPECIAL,
-    manager: {
-      id: 'm4',
-      name: '박팀장',
-      rating: 4.9,
-      reviewCount: 15600,
-      isVerified: true,
-    },
-    description: '강원권 최저가 보장 특가 상품입니다.',
-  },
 ];
