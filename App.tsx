@@ -3,28 +3,53 @@ import React, { useState, useMemo } from 'react';
 import Header from './components/Header';
 import BookingCard from './components/BookingCard';
 import AIChatDrawer from './components/AIChatDrawer';
-import { MOCK_TEE_TIMES, REGIONS } from './constants';
+import DateSelector from './components/DateSelector';
+import MobileNav from './components/MobileNav';
+import { MOCK_TEE_TIMES, REGIONS, MOCK_DATE_COUNTS } from './constants';
 
 const App: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState('ALL');
+  const [selectedDate, setSelectedDate] = useState('2026-01-07');
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTeeTimes = useMemo(() => {
     return MOCK_TEE_TIMES.filter(item => {
       const regionMatch = selectedRegion === 'ALL' || item.course.region === selectedRegion;
+      const dateMatch = item.date === selectedDate;
       const searchMatch = item.course.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                          item.course.location.toLowerCase().includes(searchQuery.toLowerCase());
-      return regionMatch && searchMatch;
+      return regionMatch && dateMatch && searchMatch;
     });
-  }, [selectedRegion, searchQuery]);
+  }, [selectedRegion, selectedDate, searchQuery]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#f1f5f9] pb-20 md:pb-0">
       <Header />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 py-8 w-full">
-        {/* Banner Section */}
-        <section className="relative rounded-3xl overflow-hidden mb-12 bg-slate-900 h-[350px] flex flex-col justify-center px-8 md:px-16">
+      {/* Pull to Refresh Area (Simulated) */}
+      <div className="h-1 w-full bg-golfmon-gradient opacity-20"></div>
+
+      <main className="flex-1 max-w-7xl mx-auto w-full">
+        {/* Sticky Sub-Header for Dates */}
+        <div className="sticky top-14 z-30 bg-white/80 backdrop-blur-md px-4 py-3 border-b border-slate-100">
+          <div className="flex justify-between items-center mb-3">
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm font-bold text-slate-900">실시간 티타임</h2>
+              <span className="animate-pulse bg-red-500 text-white text-[8px] px-1.5 py-0.5 rounded-full font-bold">LIVE</span>
+            </div>
+            <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">총 {filteredTeeTimes.length}개 검색</span>
+          </div>
+          <DateSelector 
+            dates={MOCK_DATE_COUNTS} 
+            selectedDate={selectedDate} 
+            onDateSelect={setSelectedDate} 
+          />
+        </div>
+
+        <div className="px-4 py-6">
+          <div className="flex flex-col md:flex-row gap-8">
+            {/* Sidebar / Filters (Hidden on Mobile like an App) */}
+            <aside className="hidden md:block w-64 space-y-8">
           <img 
             src="https://images.unsplash.com/photo-1535131749006-b7f58c99034b?q=80&w=1600&auto=format&fit=crop" 
             alt="Hero" 
@@ -167,8 +192,9 @@ const App: React.FC = () => {
       </main>
 
       <AIChatDrawer />
+      <MobileNav />
 
-      <footer className="bg-white border-t border-slate-200 py-12 mt-12">
+      <footer className="bg-white border-t border-slate-200 py-12 mt-12 hidden md:block">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-start gap-8 mb-8">
             <div className="max-w-xs">

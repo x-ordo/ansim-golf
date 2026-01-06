@@ -23,6 +23,8 @@ export interface GolfCourse {
   location: string;
   region: RegionId;
   image: string;
+  distanceKm?: number; // 현재 위치로부터의 거리
+  address?: string;    // 상세 주소
 }
 
 export interface Manager {
@@ -31,7 +33,12 @@ export interface Manager {
   rating: number;
   reviewCount: number;
   isVerified: boolean;
-  partnerType: 'PREMIUM' | 'CERTIFIED' | 'GENERAL'; // 파트너 등급제
+  partnerType: 'PREMIUM' | 'CERTIFIED' | 'GENERAL';
+  stats?: {
+    totalBookings: number; // 누적 완료 건수
+    favoriteCount: number; // 즐겨찾기 수
+  };
+  company?: string; // 소속 지사 (예: 골프몬 본사)
 }
 
 export interface TeeTime {
@@ -46,8 +53,19 @@ export interface TeeTime {
   type: BookingType;
   manager: Manager;
   description: string;
-  escrowEnabled: boolean; // 에스크로 적용 여부
-  refundPolicy: string;   // 공정위 준수 환불 규정 텍스트
+  escrowEnabled: boolean;
+  refundPolicy: string;
+  
+  // 골프몬 수준의 추가 메타데이터
+  holes: 18 | 27 | 36;
+  caddyType: 'CADDY' | 'NO_CADDY' | 'DRIVING_CADDY';
+  createdAt: string; // 등록 일시 (예: 01/06 22:25)
+  isEmergency?: boolean; // 긴급 매물 여부
+}
+
+export interface DateCount {
+  date: string;
+  count: number;
 }
 
 export interface ChatMessage {
