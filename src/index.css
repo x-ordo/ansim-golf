@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 body {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -9,3 +7,7 @@ body {
 }
 
 .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+@theme {
+  --background-image-golfmon-gradient: linear-gradient(0deg, rgba(36, 64, 89, 0.1) 0%, rgba(36, 64, 89, 0.1) 100%), linear-gradient(90deg, #10b981 0%, #3b82f6 98%);
+}
