@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import Header from './components/Header';
 import BookingCard from './components/BookingCard';
@@ -8,12 +7,16 @@ import MobileNav from './components/MobileNav';
 import BoardListItem from './components/BoardListItem';
 import { LoginDrawer, PolicyDrawer } from './components/LegalDrawers';
 import ManagerSaaS from './components/ManagerSaaS';
+import ChatRoomDrawer from './components/ChatRoomDrawer';
+import PaymentDrawer from './components/PaymentDrawer';
 import { MOCK_TEE_TIMES, REGIONS, MOCK_DATE_COUNTS } from './constants';
-import { BookingType } from './types';
+import { BookingType, TeeTime, Manager } from './types';
 
 const App: React.FC = () => {
   const [viewMode, setViewMode] = useState<'BOARD' | 'PRO' | 'SAAS'>('BOARD');
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [chatRoom, setChatRoom] = useState<{ isOpen: boolean, teeTime?: TeeTime }>({ isOpen: false });
   const [policyContent, setPolicyContent] = useState<{ isOpen: boolean, title: string }>({ isOpen: false, title: '' });
   const [selectedRegion, setSelectedRegion] = useState('ALL');
   const [selectedDate, setSelectedDate] = useState('2026-01-07');
@@ -28,6 +31,15 @@ const App: React.FC = () => {
       return regionMatch && dateMatch && searchMatch;
     });
   }, [selectedRegion, selectedDate, searchQuery]);
+
+  const handleOpenChat = (teeTime: TeeTime) => {
+    setChatRoom({ isOpen: true, teeTime });
+  };
+
+  const handleEscrowFromChat = () => {
+    setChatRoom({ ...chatRoom, isOpen: false });
+    setIsPaymentOpen(true); // 채팅에서 에스크로 요청 시 즉시 결제창 오픈
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f4f7fa] pb-24 md:pb-0 font-sans tracking-tight">
@@ -134,8 +146,8 @@ const App: React.FC = () => {
                     <div className={viewMode === 'BOARD' ? "flex flex-col bg-white md:rounded-3xl md:overflow-hidden md:border md:border-slate-100 shadow-sm" : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0"}>
                       {filteredTeeTimes.map(tee => (
                         viewMode === 'BOARD' 
-                          ? <BoardListItem key={tee.id} teeTime={tee} />
-                          : <BookingCard key={tee.id} teeTime={tee} />
+                          ? <div key={tee.id} onClick={() => handleOpenChat(tee)}><BoardListItem teeTime={tee} /></div>
+                          : <div key={tee.id} onClick={() => handleOpenChat(tee)}><BookingCard teeTime={tee} /></div>
                       ))}
                     </div>
                   ) : (
@@ -161,6 +173,24 @@ const App: React.FC = () => {
         isOpen={policyContent.isOpen} 
         onClose={() => setPolicyContent({ ...policyContent, isOpen: false })} 
         title={policyContent.title} 
+      />
+
+      <ChatRoomDrawer 
+        isOpen={chatRoom.isOpen} 
+        onClose={() => setChatRoom({ ...chatRoom, isOpen: false })}
+        manager={chatRoom.teeTime?.manager || MOCK_TEE_TIMES[0].manager}
+        teeTime={chatRoom.teeTime}
+        onEscrowRequest={handleEscrowFromChat}
+      />
+
+      <PaymentDrawer 
+        isOpen={isPaymentOpen}
+        onClose={() => setIsPaymentOpen(false)}
+        teeTime={chatRoom.teeTime || MOCK_TEE_TIMES[0]}
+        onSuccess={(key) => {
+          alert(`결제 성공! (Key: ${key})`);
+          setIsPaymentOpen(false);
+        }}
       />
 
       <footer className="bg-white border-t border-slate-200 py-16 mt-12 hidden md:block">

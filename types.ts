@@ -34,11 +34,13 @@ export interface Manager {
   reviewCount: number;
   isVerified: boolean;
   partnerType: 'PREMIUM' | 'CERTIFIED' | 'GENERAL';
+  subscription: 'FREE' | 'PRO' | 'PREMIUM'; // 구독 등급 추가
   stats?: {
-    totalBookings: number; // 누적 완료 건수
-    favoriteCount: number; // 즐겨찾기 수
+    totalBookings: number; 
+    favoriteCount: number; 
+    savedTimeHours?: number; // SaaS로 아낀 시간
   };
-  company?: string; // 소속 지사 (예: 골프몬 본사)
+  company?: string; 
 }
 
 export interface TeeTime {
@@ -56,19 +58,20 @@ export interface TeeTime {
   escrowEnabled: boolean;
   refundPolicy: string;
   
-  // 골프몬 수준의 추가 메타데이터
+  // SaaS 관리 상태
+  status: 'AVAILABLE' | 'DEPOSIT_PENDING' | 'CONFIRMED' | 'NOSHOW_CLAIMED';
+  billingKeySecured: boolean; // 노쇼 방지 빌링키 확보 여부
+  
   holes: 18 | 27 | 36;
   caddyType: 'CADDY' | 'NO_CADDY' | 'DRIVING_CADDY';
   createdAt: string; 
   isEmergency?: boolean; 
-  
-  // 조인 및 투어 특화 필드
   joinRequirements?: {
     gender: 'MALE' | 'FEMALE' | 'ANY' | 'COUPLE';
     count: number;
   };
   isTourPackage?: boolean;
-  lodgingInfo?: string; // 예: "델피노 리조트 1박"
+  lodgingInfo?: string;
 }
 
 export interface DateCount {
