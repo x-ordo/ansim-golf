@@ -23,24 +23,32 @@ export interface GolfCourse {
   location: string;
   region: RegionId;
   image: string;
-  distanceKm?: number; // 현재 위치로부터의 거리
-  address?: string;    // 상세 주소
+  distanceKm?: number;
+  address?: string;
+  
+  // GMS 상세 정보
+  holesCount: number;
+  parTotal: number;
+  totalDistance: number;
+  courseRating?: number;
+  operatingHours?: string;
 }
 
-export interface Manager {
+export interface Member {
   id: string;
   name: string;
-  rating: number;
-  reviewCount: number;
-  isVerified: boolean;
-  partnerType: 'PREMIUM' | 'CERTIFIED' | 'GENERAL';
-  subscription: 'FREE' | 'PRO' | 'PREMIUM'; // 구독 등급 추가
-  stats?: {
-    totalBookings: number; 
-    favoriteCount: number; 
-    savedTimeHours?: number; // SaaS로 아낀 시간
-  };
-  company?: string; 
+  rank: 'VVIP' | 'GOLD' | 'GENERAL' | 'PARTNER';
+  phone: string;
+  joinDate: string;
+  noShowCount: number;
+  totalSpent: number;
+}
+
+export interface Statistics {
+  occupancyRate: number; 
+  revenue: number;       
+  cancelledCount: number; 
+  dumpingSales: number;  
 }
 
 export interface TeeTime {
@@ -58,9 +66,9 @@ export interface TeeTime {
   escrowEnabled: boolean;
   refundPolicy: string;
   
-  // SaaS 관리 상태
-  status: 'AVAILABLE' | 'DEPOSIT_PENDING' | 'CONFIRMED' | 'NOSHOW_CLAIMED';
-  billingKeySecured: boolean; // 노쇼 방지 빌링키 확보 여부
+  // SaaS/GMS 상태
+  status: 'AVAILABLE' | 'DEPOSIT_PENDING' | 'CONFIRMED' | 'NOSHOW_CLAIMED' | 'DUMPED';
+  billingKeySecured: boolean; 
   
   holes: 18 | 27 | 36;
   caddyType: 'CADDY' | 'NO_CADDY' | 'DRIVING_CADDY';
