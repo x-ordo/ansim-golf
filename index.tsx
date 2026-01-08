@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './index.css';
+import './src/index.css';
 import { initMonitoring } from './src/utils/logger';
 
 initMonitoring();
