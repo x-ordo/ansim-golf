@@ -1,35 +1,33 @@
-
 import React, { useState } from 'react';
-import { GolfCourse, Member, Statistics, TeeTime } from '../types';
+import NotionKanban from './NotionKanban';
 
 const GMSAdmin: React.FC = () => {
-  const [activeMenu, setActiveTab] = useState<'DASHBOARD' | 'COURSE' | 'MEMBERS' | 'BOOKINGS'>('DASHBOARD');
+  const [activeMenu, setActiveTab] = useState<'DASHBOARD' | 'COURSE' | 'MEMBERS' | 'BOOKINGS' | 'TASKS'>('DASHBOARD');
 
-  // 가상 통계 데이터
-  const stats: Statistics = {
-    occupancyRate: 84.5,
-    revenue: 42500000,
-    cancelledCount: 12,
-    dumpingSales: 3400000
+  // Mock Stats
+  const stats = {
+    occupancyRate: 82.5,
+    revenue: 12400000,
+    cancelledCount: 3,
+    dumpingSales: 2700000
   };
 
   return (
-    <div className="flex-1 bg-slate-50 flex flex-col md:flex-row h-screen overflow-hidden">
-      {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-slate-900 text-white p-6 flex flex-col gap-8">
-        <div className="flex items-center gap-2 px-2">
-          <div className="bg-emerald-500 p-1.5 rounded-lg text-white">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+    <div className="flex h-screen bg-slate-900 text-white overflow-hidden">
+      {/* Sidebar */}
+      <aside className="w-64 bg-slate-900 border-r border-slate-800 p-6 flex flex-col justify-between hidden md:flex">
+        <nav className="space-y-2">
+          <div className="px-4 mb-8">
+            <h1 className="text-xl font-black text-white tracking-tighter">ANSIM <span className="text-emerald-500">GMS</span></h1>
+            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mt-1">Partner Admin v1.0</p>
           </div>
-          <h2 className="text-lg font-black">GMS Admin</h2>
-        </div>
-        
-        <nav className="flex-1 space-y-1">
+
           {[
             { id: 'DASHBOARD', label: '운영 요약', icon: '📊' },
             { id: 'COURSE', label: '코스 관리', icon: '⛳' },
             { id: 'MEMBERS', label: '회원 관리', icon: '👥' },
             { id: 'BOOKINGS', label: '예약/덤핑', icon: '🕒' },
+            { id: 'TASKS', label: '업무 보드', icon: '✅' },
           ].map((menu) => (
             <button
               key={menu.id}
@@ -54,7 +52,7 @@ const GMSAdmin: React.FC = () => {
       </aside>
 
       {/* Main Dashboard Area */}
-      <main className="flex-1 overflow-y-auto p-6 md:p-10">
+      <main className="flex-1 overflow-y-auto p-6 md:p-10 bg-slate-50">
         {activeMenu === 'DASHBOARD' && (
           <div className="max-w-5xl mx-auto space-y-10">
             <header>
@@ -118,8 +116,10 @@ const GMSAdmin: React.FC = () => {
           </div>
         )}
 
+        {activeMenu === 'TASKS' && <NotionKanban />}
+
         {/* Other menus placeholders */}
-        {activeMenu !== 'DASHBOARD' && (
+        {activeMenu !== 'DASHBOARD' && activeMenu !== 'TASKS' && (
           <div className="flex flex-col items-center justify-center h-full text-slate-300">
             <span className="text-6xl mb-4">🏗️</span>
             <p className="text-sm font-bold uppercase tracking-widest">모듈 개발 중</p>

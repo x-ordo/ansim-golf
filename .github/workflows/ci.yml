@@ -1,0 +1,74 @@
+name: CI - Quality Gate
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify:
+    name: 🛡️ Verify Standards
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: 🔍 Type Check (TypeScript)
+        run: npx tsc --noEmit
+
+      - name: 🧹 Lint (ESLint)
+        run: npm run lint
+
+      - name: 🔒 Security Audit
+        run: npm audit --audit-level=high
+
+  test:
+    name: 🧪 Automated Tests
+    needs: verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: ⚡ Unit & Integration Tests (Vitest)
+        run: npm run test:unit -- --coverage
+
+      # - name: 🎭 E2E Tests (Playwright)
+      #   run: npx playwright test
+      #   if: github.event_name == 'pull_request' # PR에서만 실행 (비용/시간 절약)
+
+  build-check:
+    name: 🏗️ Build Verification
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build
