@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.wrangler/
+ansim-golf-mobile/
+package-lock.json

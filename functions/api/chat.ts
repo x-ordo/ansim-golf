@@ -98,7 +98,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     let parsedResponse: { text: string, recommendedIds: string[] };
     try {
       parsedResponse = JSON.parse(generatedText);
-    } catch (e) {
+    } catch {
       // Fallback if AI fails to output JSON
       parsedResponse = { text: generatedText, recommendedIds: [] };
     }

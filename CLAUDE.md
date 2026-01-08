@@ -19,13 +19,28 @@ npm run build
 npm run preview
 
 # Run all tests
-npx vitest
+npm test
 
 # Run single test file
 npx vitest tests/unit/services/bookingService.test.ts
 
 # Run tests in watch mode
-npx vitest --watch
+npm run test:watch
+
+# Type check
+npm run type-check
+
+# Lint
+npm run lint
+
+# Lint and auto-fix
+npm run lint:fix
+
+# Format code with Prettier
+npm run format
+
+# Check formatting
+npm run format:check
 
 # Run Cloudflare Workers locally (requires wrangler)
 npx wrangler pages dev dist

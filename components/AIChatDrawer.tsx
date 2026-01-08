@@ -2,9 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage } from '../types';
 import { sendMessageToGemini } from '../src/services/geminiService';
 
-interface AIChatDrawerProps {
-  // Props can be extended if needed (e.g., onClose from parent)
-}
+type AIChatDrawerProps = Record<string, never>;
 
 const AIChatDrawer: React.FC<AIChatDrawerProps> = () => {
   const [isOpen, setIsOpen] = useState(false);
