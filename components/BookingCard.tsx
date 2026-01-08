@@ -1,18 +1,20 @@
 import React from 'react';
-import { TeeTime, BookingType } from '../types';
+import { TeeTime } from '../types';
 
 interface BookingCardProps {
   teeTime: TeeTime;
 }
 
+type TeeTimeType = TeeTime['type'];
+
 const BookingCard: React.FC<BookingCardProps> = ({ teeTime }) => {
-  const getBadgeColor = (type: BookingType) => {
+  const getBadgeColor = (type: TeeTimeType) => {
     switch (type) {
-      case BookingType.TRANSFER: return 'bg-orange-500 text-white';
-      case BookingType.JOIN: return 'bg-blue-500 text-white';
-      case BookingType.SPECIAL: return 'bg-emerald-500 text-white';
-      case BookingType.TOUR: return 'bg-purple-500 text-white';
-      case BookingType.FESTA: return 'bg-pink-500 text-white';
+      case 'TRANSFER': return 'bg-orange-500 text-white';
+      case 'JOIN': return 'bg-blue-500 text-white';
+      case 'SPECIAL': return 'bg-emerald-500 text-white';
+      case 'TOUR': return 'bg-purple-500 text-white';
+      case 'FESTA': return 'bg-pink-500 text-white';
       default: return 'bg-slate-500 text-white';
     }
   };

@@ -5,12 +5,24 @@ describe('TeeTime Model Validation', () => {
   const validTeeTime = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     courseId: '123e4567-e89b-12d3-a456-426614174001',
+    course: {
+      id: '123e4567-e89b-12d3-a456-426614174001',
+      name: '파주CC',
+      region: 'SUDOKWON_NORTH',
+      location: '파주',
+      image: 'https://via.placeholder.com/150',
+      holesCount: 18
+    },
     date: '2026-05-15',
     time: '08:30',
     price: 250000,
     originalPrice: 300000,
     type: 'JOIN',
     managerId: '123e4567-e89b-12d3-a456-426614174002',
+    manager: {
+      id: '123e4567-e89b-12d3-a456-426614174002',
+      name: '김매니저'
+    },
     status: 'AVAILABLE',
     escrowEnabled: true
   };
@@ -25,18 +37,20 @@ describe('TeeTime Model Validation', () => {
     const result = validateTeeTime(invalidData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toContain('non-negative'); // Zod error message or custom
+      // Find the specific error for price
+      const priceError = result.error.issues.find(i => i.path.includes('price'));
+      expect(priceError?.message).toContain('Price must be non-negative');
     }
   });
 
   it('should fail when date format is invalid', () => {
-    const invalidData = { ...validTeeTime, date: '2026/05/15' }; // Wrong separator
+    const invalidData = { ...validTeeTime, date: '2026/05/15' };
     const result = validateTeeTime(invalidData);
     expect(result.success).toBe(false);
   });
 
   it('should fail when time format is invalid', () => {
-    const invalidData = { ...validTeeTime, time: '8:30' }; // Missing padding
+    const invalidData = { ...validTeeTime, time: '8:30' };
     const result = validateTeeTime(invalidData);
     expect(result.success).toBe(false);
   });

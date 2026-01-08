@@ -7,7 +7,7 @@ interface ShareDrawerProps {
   title: string;
 }
 
-const ShareDrawer: React.FC<ShareDrawerProps> = ({ isOpen, onClose, title }) => {
+const ShareDrawer: React.FC<ShareDrawerProps> = ({ isOpen, onClose, title: _title }) => {
   if (!isOpen) return null;
 
   return (

@@ -10,10 +10,18 @@
       "DOM.Iterable"
     ],
     "skipLibCheck": true,
-        "types": [
-          "node",
-          "@cloudflare/workers-types"
-        ],
+    "types": [
+      "node",
+      "@cloudflare/workers-types"
+    ],
+
+    /* Strict Type Checking */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -26,5 +34,7 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", "dist", "ansim-golf-mobile"]
 }

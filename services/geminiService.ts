@@ -24,7 +24,7 @@ export const generateGolfAdvice = async (history: ChatMessage[]): Promise<string
   }
 };
 
-export const extractTeeTimeInfo = async (unstructuredText: string) => {
+export const extractTeeTimeInfo = async (_unstructuredText: string) => {
   // TODO: Implement backend endpoint for extraction if needed
   return "Currently migrating to backend...";
 };

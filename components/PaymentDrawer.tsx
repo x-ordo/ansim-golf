@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TeeTime } from '../types';
 
 interface PaymentDrawerProps {
@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-const PaymentDrawer: React.FC<PaymentDrawerProps> = ({ isOpen, onClose, teeTime, onSuccess }) => {
+const PaymentDrawer: React.FC<PaymentDrawerProps> = ({ isOpen, onClose, teeTime, onSuccess: _onSuccess }) => {
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {

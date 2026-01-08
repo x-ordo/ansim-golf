@@ -71,9 +71,9 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f4f7fa] pb-32 md:pb-0 font-sans tracking-tight">
-      <Header 
-        viewMode={viewMode === 'SAAS' ? 'PRO' : viewMode} 
-        onViewModeChange={(mode) => setViewMode(mode)} 
+      <Header
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
       />
 
       {viewMode === 'SAAS' ? (
@@ -206,7 +206,7 @@ const App: React.FC = () => {
       <ChatRoomDrawer 
         isOpen={chatRoom.isOpen} 
         onClose={() => setChatRoom({ ...chatRoom, isOpen: false })}
-        manager={chatRoom.teeTime?.manager || { id: 'default', name: '매니저', rank: 'GENERAL', phone: '', joinDate: '', noShowCount: 0, totalSpent: 0 }}
+        manager={chatRoom.teeTime?.manager ?? { id: 'default', name: '매니저' }}
         teeTime={chatRoom.teeTime}
         onEscrowRequest={handleEscrowFromChat}
       />

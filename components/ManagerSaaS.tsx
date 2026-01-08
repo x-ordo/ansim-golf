@@ -1,23 +1,33 @@
 import React from 'react';
+import { parseBookingText } from '../src/services/managerService';
 
 const ManagerSaaS: React.FC = () => {
   const [pasteContent, setPasteContent] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
   const [notification, setNotification] = React.useState<{ show: boolean, msg: string }>({ show: false, msg: '' });
 
-  // [핵심 기능] AI 텍스트 파싱 로직 시뮬레이션
-  const handleParse = () => {
-    if (!pasteContent) return;
+  // [핵심 기능] AI 텍스트 파싱 로직 적용
+  const handleParse = async () => {
+    if (!pasteContent || isLoading) return;
     
-    // 단순 정규식 기반 파싱 시뮬레이션
-    const dateMatch = pasteContent.match(/(\d{1,2})[/\.](\d{1,2})/) || ['01/07'];
-    const timeMatch = pasteContent.match(/(\d{2}):(\d{2})/) || ['09:51'];
-    
-    setNotification({
-      show: true,
-      msg: `[추출 완료] ${dateMatch[0]} ${timeMatch[0]} 티타임이 인벤토리에 추가되었습니다.`
-    });
-    setPasteContent('');
-    setTimeout(() => setNotification({ show: false, msg: '' }), 3000);
+    setIsLoading(true);
+    try {
+      const result = await parseBookingText(pasteContent);
+      
+      setNotification({
+        show: true,
+        msg: `[추출 완료] ${result.parsedCount}개의 티타임이 감지되었습니다.`
+      });
+      setPasteContent('');
+    } catch (error: any) {
+      setNotification({
+        show: true,
+        msg: `❌ 오류: ${error.message}`
+      });
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => setNotification({ show: false, msg: '' }), 3000);
+    }
   };
 
   // [핵심 기능] 알림톡 발송 시뮬레이션

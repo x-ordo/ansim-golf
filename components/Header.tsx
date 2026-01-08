@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface HeaderProps {
-  viewMode: 'BOARD' | 'PRO' | 'GMS';
-  onViewModeChange: (mode: 'BOARD' | 'PRO' | 'GMS') => void;
+  viewMode: 'BOARD' | 'PRO' | 'SAAS';
+  onViewModeChange: (mode: 'BOARD' | 'PRO' | 'SAAS') => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ viewMode, onViewModeChange }) => {
@@ -33,9 +33,9 @@ const Header: React.FC<HeaderProps> = ({ viewMode, onViewModeChange }) => {
             >
               안심예약
             </button>
-            <button 
-              onClick={() => onViewModeChange('GMS')}
-              className={`px-5 py-2 rounded-xl text-sm font-bold transition-all ${viewMode === 'GMS' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
+            <button
+              onClick={() => onViewModeChange('SAAS')}
+              className={`px-5 py-2 rounded-xl text-sm font-bold transition-all ${viewMode === 'SAAS' ? 'bg-slate-900 text-white shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}
             >
               골프장관리
             </button>

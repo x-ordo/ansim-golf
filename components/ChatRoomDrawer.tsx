@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Manager, TeeTime } from '../types';
+import { TeeTime } from '../types';
 
 interface ChatRoomDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  manager: Manager;
+  manager: { id: string; name: string };
   teeTime?: TeeTime;
   onEscrowRequest?: () => void;
 }
