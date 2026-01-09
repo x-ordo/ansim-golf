@@ -29,7 +29,7 @@ const App: React.FC = () => {
     title: '',
   });
   const [selectedRegion, setSelectedRegion] = useState('ALL');
-  const [selectedDate, setSelectedDate] = useState('2026-01-07');
+  const [selectedDate, setSelectedDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredTeeTimes = useMemo(() => {
