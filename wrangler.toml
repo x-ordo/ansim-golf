@@ -6,7 +6,7 @@ pages_build_output_dir = "./dist"
 [[d1_databases]]
 binding = "DB" # Used as env.DB in Workers
 database_name = "ansim-golf-db"
-database_id = "YOUR_DATABASE_ID_FROM_CLOUDFLARE_DASHBOARD" # TODO: Update this
+database_id = "925f4121-0d23-45b2-a190-074713a8e545"
 
 # Environment Variables
 [vars]
