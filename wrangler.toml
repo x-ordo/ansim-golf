@@ -1,0 +1,38 @@
+name = "ansim-golf"
+compatibility_date = "2024-04-05"
+pages_build_output_dir = "./dist"
+
+# Cloudflare D1 Database Binding
+[[d1_databases]]
+binding = "DB" # Used as env.DB in Workers
+database_name = "ansim-golf-db"
+database_id = "YOUR_DATABASE_ID_FROM_CLOUDFLARE_DASHBOARD" # TODO: Update this
+
+# Environment Variables
+[vars]
+GEMINI_API_KEY = "YOUR_API_KEY" # Overridden by .dev.vars in local
+
+# Toss Payments (Override in .dev.vars or Cloudflare Dashboard)
+TOSS_CLIENT_KEY = ""
+TOSS_SECRET_KEY = ""
+TOSS_WEBHOOK_SECRET = ""
+
+# Kakao AlimTalk (Override in .dev.vars or Cloudflare Dashboard)
+KAKAO_REST_API_KEY = ""
+KAKAO_SENDER_KEY = ""
+
+# KV Namespaces (Session/Cache)
+# [[kv_namespaces]]
+# binding = "SESSION_KV"
+# id = "..."
+
+# Cron Triggers for Automation
+# Note: For Cloudflare Pages, cron triggers require Workers + Pages integration
+# Deploy as Worker with Pages static assets or use external cron service
+[triggers]
+crons = [
+  "0 * * * *",    # 매시 정각 - 리마인더 체크 (/api/cron/reminders)
+  "*/15 * * * *", # 15분마다 - 덤핑 체크 (/api/cron/dumping-check)
+  "*/30 * * * *", # 30분마다 - 노쇼 체크 (/api/cron/noshow-billing)
+  "0 6 * * *"     # 매일 06:00 - 정산 (/api/cron/settlement)
+]
