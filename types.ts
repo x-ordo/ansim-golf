@@ -24,10 +24,20 @@ export enum BookingType {
   JOIN = 'JOIN',
   SPECIAL = 'SPECIAL',
   TOUR = 'TOUR',
-  FESTA = 'FESTA'
+  FESTA = 'FESTA',
 }
 
-export type RegionId = 'ALL' | 'SUDOKWON_SOUTH' | 'SUDOKWON_NORTH' | 'CHUNGCHEONG' | 'GANGWON' | 'THAILAND' | 'CHINA' | 'JAPAN' | 'VIETNAM' | 'ETC';
+export type RegionId =
+  | 'ALL'
+  | 'SUDOKWON_SOUTH'
+  | 'SUDOKWON_NORTH'
+  | 'CHUNGCHEONG'
+  | 'GANGWON'
+  | 'THAILAND'
+  | 'CHINA'
+  | 'JAPAN'
+  | 'VIETNAM'
+  | 'ETC';
 
 export interface GolfCourse {
   id: string;
@@ -65,8 +75,19 @@ export interface KanbanTask {
 }
 
 export interface Statistics {
-  occupancyRate: number; 
-  revenue: number;       
-  cancelledCount: number; 
-  dumpingSales: number;  
+  occupancyRate: number;
+  revenue: number;
+  cancelledCount: number;
+  dumpingSales: number;
+}
+
+// Mobile View Types
+export type MobileView = 'list' | 'detail' | 'chat' | 'profile' | 'myinfo';
+export type MobileTab = 'board' | 'pro' | 'partner';
+
+export interface MobileNavigationState {
+  view: MobileView;
+  tab: MobileTab;
+  selectedTeeTimeId?: string;
+  selectedManagerId?: string;
 }
