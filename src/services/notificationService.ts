@@ -10,8 +10,9 @@ export type NotificationType =
   | 'PAYMENT_REMINDER' // 입금 리마인더
   | 'ROUND_REMINDER_D1' // 라운드 D-1 리마인더
   | 'ROUND_REMINDER_D0' // 라운드 당일 리마인더
-  | 'NOSHOW_WARNING' // 노쇼 경고
-  | 'NOSHOW_CHARGED' // 노쇼 위약금 청구 완료
+  | 'NOSHOW_WARNING' // 노쇼 경고 (매니저용)
+  | 'NOSHOW_CHARGED' // 노쇼 위약금 안내 (계좌번호 포함)
+  | 'PENALTY_PAID_CONFIRM' // 위약금 입금 확인
   | 'BOOKING_CANCELED' // 예약 취소
   | 'PRICE_DROPPED'; // 관심 티타임 가격 인하
 
@@ -41,10 +42,16 @@ export interface NotificationTemplateData {
   time?: string;
   amount?: number;
   penaltyAmount?: number;
+  paidAmount?: number;
   originalPrice?: number;
   newPrice?: number;
   managerName?: string;
   refundPolicy?: string;
+  // 계좌 정보 (노쇼 위약금용)
+  accountBank?: string;
+  accountNumber?: string;
+  accountHolder?: string;
+  deadline?: string;
 }
 
 // 카카오 알림톡 템플릿 ID (실제 승인된 템플릿 ID로 교체 필요)
@@ -56,6 +63,7 @@ export const ALIMTALK_TEMPLATES: Record<NotificationType, string> = {
   ROUND_REMINDER_D0: 'TPL_ROUND_REMINDER_D0',
   NOSHOW_WARNING: 'TPL_NOSHOW_WARNING',
   NOSHOW_CHARGED: 'TPL_NOSHOW_CHARGED',
+  PENALTY_PAID_CONFIRM: 'TPL_PENALTY_PAID_CONFIRM',
   BOOKING_CANCELED: 'TPL_BOOKING_CANCELED',
   PRICE_DROPPED: 'TPL_PRICE_DROPPED',
 };
@@ -120,13 +128,29 @@ export function generateAlimtalkMessage(
 체크인 미확인 시 노쇼 처리될 수 있습니다.`;
 
     case 'NOSHOW_CHARGED':
-      return `[안심골프] 노쇼 위약금이 청구되었습니다.
+      return `[안심골프] 노쇼 위약금 안내
+
+고객님의 예약이 노쇼 처리되었습니다.
 
 골프장: ${data.courseName}
 예약일시: ${data.date} ${data.time}
 위약금: ${formatPrice(data.penaltyAmount)}
 
+■ 입금 안내
+은행: ${data.accountBank || '토스뱅크'}
+계좌: ${data.accountNumber || '1234-5678-9012'}
+예금주: ${data.accountHolder || '안심골프'}
+입금기한: ${data.deadline || '7일 이내'}
+
+입금 시 예약자명으로 입금해주세요.
 문의: 고객센터 02-2003-2005`;
+
+    case 'PENALTY_PAID_CONFIRM':
+      return `[안심골프] 위약금 입금 확인
+
+${data.courseName} 노쇼 위약금 ${formatPrice(data.paidAmount)}이 정상 입금되었습니다.
+
+이용해주셔서 감사합니다.`;
 
     case 'BOOKING_CANCELED':
       return `[안심골프] 예약이 취소되었습니다.
