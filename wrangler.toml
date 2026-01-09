@@ -27,12 +27,10 @@ KAKAO_SENDER_KEY = ""
 # id = "..."
 
 # Cron Triggers for Automation
-# Note: For Cloudflare Pages, cron triggers require Workers + Pages integration
-# Deploy as Worker with Pages static assets or use external cron service
-[triggers]
-crons = [
-  "0 * * * *",    # 매시 정각 - 리마인더 체크 (/api/cron/reminders)
-  "*/15 * * * *", # 15분마다 - 덤핑 체크 (/api/cron/dumping-check)
-  "*/30 * * * *", # 30분마다 - 노쇼 체크 (/api/cron/noshow-billing)
-  "0 6 * * *"     # 매일 06:00 - 정산 (/api/cron/settlement)
-]
+# Note: Cloudflare Pages does not support [triggers] directly.
+# Set up cron via separate Worker or external service (e.g., cron-job.org)
+# Cron schedule reference:
+#   - 0 * * * *    : 매시 정각 - 리마인더 (/api/cron/reminders)
+#   - */15 * * * * : 15분마다 - 덤핑 체크 (/api/cron/dumping-check)
+#   - */30 * * * * : 30분마다 - 노쇼 체크 (/api/cron/noshow-billing)
+#   - 0 6 * * *    : 매일 06:00 - 정산 (/api/cron/settlement)
