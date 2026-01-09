@@ -14,7 +14,8 @@ export type NotificationType =
   | 'NOSHOW_CHARGED' // 노쇼 위약금 안내 (계좌번호 포함)
   | 'PENALTY_PAID_CONFIRM' // 위약금 입금 확인
   | 'BOOKING_CANCELED' // 예약 취소
-  | 'PRICE_DROPPED'; // 관심 티타임 가격 인하
+  | 'PRICE_DROPPED' // 관심 티타임 가격 인하
+  | 'SETTLEMENT_READY'; // 정산 완료 (매니저용)
 
 // 알림 상태
 export type NotificationStatus = 'PENDING' | 'SENT' | 'FAILED' | 'CANCELED';
@@ -52,6 +53,12 @@ export interface NotificationTemplateData {
   accountNumber?: string;
   accountHolder?: string;
   deadline?: string;
+  // 정산 관련
+  settlementId?: string;
+  startDate?: string;
+  endDate?: string;
+  totalBookings?: number;
+  netAmount?: number;
 }
 
 // 카카오 알림톡 템플릿 ID (실제 승인된 템플릿 ID로 교체 필요)
@@ -66,6 +73,7 @@ export const ALIMTALK_TEMPLATES: Record<NotificationType, string> = {
   PENALTY_PAID_CONFIRM: 'TPL_PENALTY_PAID_CONFIRM',
   BOOKING_CANCELED: 'TPL_BOOKING_CANCELED',
   PRICE_DROPPED: 'TPL_PRICE_DROPPED',
+  SETTLEMENT_READY: 'TPL_SETTLEMENT_READY',
 };
 
 // 알림톡 메시지 생성
@@ -169,6 +177,15 @@ ${data.courseName} 노쇼 위약금 ${formatPrice(data.paidAmount)}이 정상 �
 할인가: ${formatPrice(data.newPrice)}
 
 지금 바로 예약하세요!`;
+
+    case 'SETTLEMENT_READY':
+      return `[안심골프] 정산 리포트 안내
+
+기간: ${data.startDate} ~ ${data.endDate}
+예약: ${data.totalBookings || 0}건
+정산금액: ${formatPrice(data.netAmount)}
+
+상세 내역은 관리자 페이지에서 확인하세요.`;
 
     default:
       return '';
